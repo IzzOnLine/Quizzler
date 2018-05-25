@@ -42,8 +42,11 @@ class ViewController: UIViewController {
     
     
     func updateUI() {
+        // In java il cast si fa esattamente al contrario ... (String)numero anzichè String(numero) !!!!!
         scoreLabel.text = "Score:" + String(score)
         progressLabel.text = String(questionNumber)+"/\(allQuestions.list.count)"
+        progressBar.frame.size.width = (view.frame.size.width / CGFloat(allQuestions.list.count)) * CGFloat(questionNumber)
+        print(progressBar.frame.size.width)
         nextQuestion();
 
     }
@@ -72,6 +75,9 @@ class ViewController: UIViewController {
         
         if(correctAnswer==pickedAnswer){
             score = score + 1
+            ProgressHUD.showSuccess("Correct")
+        } else {
+            ProgressHUD.showError("Wrong!")
         }
     }
     

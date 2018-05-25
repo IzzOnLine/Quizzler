@@ -13,7 +13,6 @@ class Question {
     let questionText:String
     let answer:Bool
     
-    // costruttore
     init(text:String, correctAnswer:Bool) {
         answer = correctAnswer
         questionText = text
