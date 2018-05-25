@@ -13,7 +13,9 @@ class QuestionBank{
     var list = [Question]()
     
     init() {
-        let item = Question(text: "domanda", correctAnswer: true)
+        let item = Question(text: "domanda1", correctAnswer: true)
         list.append(item)
+        
+        list.append(Question(text: "domanda2", correctAnswer: false))
     }
 }

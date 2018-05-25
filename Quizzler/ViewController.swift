@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     let allQuestions = QuestionBank()
     var pickedAnswer : Bool = false
     var questionNumber : Int = 0
+    var score : Int = 0
     
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -24,10 +25,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let firstQuestion = allQuestions.list[questionNumber];
-        questionLabel.text = firstQuestion.questionText;
-        
+        updateUI()
     }
 
 
@@ -39,21 +37,32 @@ class ViewController: UIViewController {
         }
         checkAnswer();
         questionNumber = questionNumber + 1
-        nextQuestion();
+        updateUI();
     }
     
     
     func updateUI() {
-      
+        scoreLabel.text = "Score:" + String(score)
+        progressLabel.text = String(questionNumber)+"/\(allQuestions.list.count)"
+        nextQuestion();
+
     }
     
 
     func nextQuestion() {
         if(questionNumber < allQuestions.list.count){
             questionLabel.text = allQuestions.list[questionNumber].questionText
-        } else if(questionNumber >= allQuestions.list.count){
-            print("END")
-            questionNumber = 0;
+        } else {
+            let alert = UIAlertController(title: "Magnifico", message: "Quiz completato!", preferredStyle: .alert)
+            
+            let restartAction = UIAlertAction(title: "Ricominciare?", style: .default,handler: {
+                (alert:UIAlertAction) in
+                self.startOver();
+            })
+            
+            alert.addAction(restartAction);
+            
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -62,16 +71,15 @@ class ViewController: UIViewController {
         let correctAnswer = allQuestions.list[questionNumber].answer;
         
         if(correctAnswer==pickedAnswer){
-            print("OK");
+            score = score + 1
         }
-        
-        
-
     }
     
     
     func startOver() {
-       
+        questionNumber = 0;
+        score = 0;
+        updateUI();
     }
     
 
